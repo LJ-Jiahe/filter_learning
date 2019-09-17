@@ -33,10 +33,13 @@ test_loader = torch.utils.data.DataLoader(
 # Initialize model
 model = classes.One_Filter_Net()
 
+if torch.cuda.is_available():
+    print("\nCuda available\n")
+    model.cuda()
+
 # Other parameteres
 criterion = cfg.criterion
 optimizer = torch.optim.Adam(model.parameters(), lr=cfg.lr)
-
 
 
 print("\nTraining starts\n")
