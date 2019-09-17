@@ -19,7 +19,8 @@ class One_Filter_Net(nn.Module):
             out_channels=cfg.out_channels,
             kernel_size=cfg.kernel_size,
             stride=cfg.stride,
-            padding=cfg.padding)
+            padding=cfg.padding,
+            bias=cfg.filter_bias)
 
         nn.init.xavier_uniform_(self.conv.weight)
         self.ac_fun = nn.Sigmoid()

@@ -12,7 +12,14 @@ validate_input_dir = "test_input"
 validate_target_dir = "test_target"
 loss_folder = "loss"
 
-transform = None
+train_gs_dir = "train_grayscale"
+test_gs_dir = "test_grayscale"
+
+train_gs_filtered_dir = "train_grayscale_filtered"
+test_gs_filtered_dir = "test_grayscale_filtered"
+
+transform = transforms.Compose([
+   transforms.ToTensor()])
 
 train_batch_size = 50
 test_batch_size = 1
@@ -31,8 +38,8 @@ recov_from_ckpt = False
 ckpt_folder = "checkpoints"
 
 # Model
-in_channels = 3
-out_channels = 10
+in_channels = 1
+out_channels = 1
 kernel_size = 3
 stride = 1
 padding = 1

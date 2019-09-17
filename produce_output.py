@@ -7,6 +7,7 @@ from PIL import Image
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 import numpy as np
+import torchvision
 
 
 # Setting up dataset & dataloader
@@ -32,12 +33,20 @@ test_loader = torch.utils.data.DataLoader(
 
 filter = classes.Filter()
 fig = plt.figure(figsize=(18, 9))
+
 for ite, datapoint in enumerate(tqdm(train_loader, desc='Filter')):
     input_image = datapoint['input_image']
     output = filter(input_image)
-    im_save = output.numpy()
-    im = Image.fromarray(im_save[0, 0, :, :])
-    print(np.max(im))
-    print(np.min(im))
-    im.save(
-        os.path.join(cfg.data_folder, cfg.train_target_dir, str(ite) + '.jpg'))
+    torchvision.utils.save_image(
+        input_image[0, 0, :, :], os.path.join(cfg.data_folder, cfg.train_gs_dir, str(ite) + '.jpg'))
+    torchvision.utils.save_image(
+        output[0, 0, :, :], os.path.join(cfg.data_folder, cfg.train_gs_filtered_dir, str(ite) + '.jpg'))
+
+for ite, datapoint in enumerate(tqdm(test_loader, desc='Filter')):
+    input_image = datapoint['input_image']
+    output = filter(input_image)
+    torchvision.utils.save_image(
+        input_image[0, 0, :, :], os.path.join(cfg.data_folder, cfg.test_gs_dir, str(ite) + '.jpg'))
+    torchvision.utils.save_image(
+        output[0, 0, :, :], os.path.join(cfg.data_folder, cfg.test_gs_filtered_dir, str(ite) + '.jpg'))
+
